@@ -39,7 +39,7 @@ class EmployeTest {
         // Then
         Assertions.assertThat(nbAnnees).isNotNull();
         Assertions.assertThat(nbAnnees).isNotNegative();
-        Assertions.assertThat(nbAnnees).isEqualTo(0);
+        Assertions.assertThat(nbAnnees).isZero();
     }
 
     @ParameterizedTest(name = "getPrimeAnnuelle: Employee: [matricule: {0}, anciennete: {1}, performance: {2}, tempsTravail: {3}] - Expect : {4}")
