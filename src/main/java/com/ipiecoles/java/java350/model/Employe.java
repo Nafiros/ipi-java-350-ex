@@ -67,12 +67,15 @@ public class Employe {
         int i2 = 104;
 
         switch (LocalDate.of(d.getYear(),1,1).getDayOfWeek()){
-        case THURSDAY: if(d.isLeapYear()) i2 =  i2 + 1; break;
-        case FRIDAY:
-        if(d.isLeapYear()) i2 =  i2 + 2;
-        else i2 =  i2 + 1;
-case SATURDAY:i2 = i2 + 1;
-                    break;
+            case THURSDAY:
+                if(d.isLeapYear()) i2 =  i2 + 1;
+                break;
+            case FRIDAY:
+                if(d.isLeapYear()) i2 =  i2 + 2;
+                else i2 =  i2 + 1;
+                break;
+            case SATURDAY:i2 = i2 + 1;
+                break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
