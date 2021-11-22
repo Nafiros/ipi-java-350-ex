@@ -103,7 +103,7 @@ case SATURDAY:var = var + 1;
         else if (this.performance == null || Entreprise.PERFORMANCE_BASE.equals(this.performance)){
             prime = Entreprise.primeAnnuelleBase() + primeAnciennete;
         }
-        //Pour les employés plus performance, on bonnifie la prime de base en multipliant par la performance de l'employé
+        //Pour les employés plus performants, on bonnifie la prime de base en multipliant par la performance de l'employé
         // et l'indice de prime de base.
         else {
             prime = Entreprise.primeAnnuelleBase() * (this.performance + Entreprise.INDICE_PRIME_BASE) + primeAnciennete;
