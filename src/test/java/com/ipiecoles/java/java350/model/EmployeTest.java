@@ -240,7 +240,18 @@ class EmployeTest {
     void equalsWithNonEqualsEmploye() {
         //given
         Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
-        Employe b = new Employe("Silverhand", "Johnny", "M00003", LocalDate.now(), 1000.0, 1, 1.0);
+        Employe b = new Employe("Silverhand", "Johnny", "M00003", LocalDate.now().minusYears(2), 1300.0, 2, 1.5);
+        //when
+        Boolean result = a.equals(b);
+        //then
+        Assertions.assertThat(result).isFalse();
+    }
+
+    @Test
+    void equalsWithDifferentObject() {
+        //given
+        Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
+        String b = new String("lol");
         //when
         Boolean result = a.equals(b);
         //then
