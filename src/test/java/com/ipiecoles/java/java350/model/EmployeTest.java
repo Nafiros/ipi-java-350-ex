@@ -9,7 +9,6 @@ import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.params.converter.DefaultArgumentConverter;
 
@@ -133,6 +132,20 @@ class EmployeTest {
         Assertions.assertThat(result).isEqualTo(expected);
     }
 
+    /*
+    ** Si la date d'entrée de l'employé est anterieur de 5 ans à la date du jour,
+    ** Lorsque l'ont demande à l'application de nous fournir le nombre d'année d'ancienneté
+    ** Alors elle nous retourne 5 ans d'ancienneté.
+    *
+    ** Si la date d'entrée de l'employé est posterieur à la date du jour,
+    ** Lorsque l'ont demande à l'application de nous fournir le nombre d'année d'ancienneté
+    ** Alors elle nous retourne une valeur nulle / une erreur.
+    *
+    ** Si la date d'entrée de l'employé est égale à la date du jour,
+    ** Lorsque l'ont demande à l'application de nous fournir le nombre d'année d'ancienneté
+    ** Alors elle nous retourne 0 année d'ancienneté.
+    */
+
     @ParameterizedTest(name = "getNombreAnneeAnciennete: LocalDate.now() + {0} années - Expect : {1}")
     @CsvSource({
             "0, 0",
@@ -163,6 +176,12 @@ class EmployeTest {
         Assertions.assertThat(nbAnnees).isNull();
     }
 
+    /*
+    ** Pour un employé s'appellant John Doe, ayant pour matricule M00001, un an d'ancienneté, et travaillant en temps plein à un taux d'efficacité normale.
+    ** Lorsque l'ont demande à l'application de nous fournir la prime annuelle pour cet employé,
+    ** Alors elle nous retourne 1800.00 euros de prime annuelle.
+    */
+
     @ParameterizedTest(name = "getPrimeAnnuelle: Employee: [matricule: {0}, anciennete: {1}, performance: {2}, tempsTravail: {3}] - Expect : {4}")
     @CsvSource({
             "'M00001', 0, 1, 1.0, 1700.0",
@@ -176,7 +195,7 @@ class EmployeTest {
             "'M00001', 0, 1, null, null",
             "null, 0, 1, 1.0, 1000.0",
 
-            "'E00002', 0, 1, 1.0, 1000.0",
+            "'T00002', 0, 1, 1.0, 1000.0",
             "'E00002', 1, 1, 1.0, 1100.0",
             "'E00002', 0, 2, 1.0, 2300.0",
             "'E00002', 0, 1, 0.5, 500.0",
@@ -195,4 +214,38 @@ class EmployeTest {
         //Then
         Assertions.assertThat(prime).isEqualTo(expected);
     }
+
+    @Test
+    void equalsWithEqualsEmploye() {
+        //given
+        Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
+        Employe b = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
+        //when
+        Boolean result = a.equals(b);
+        //then
+        Assertions.assertThat(result).isTrue();
+    }
+
+    @Test
+    void equalsWithSameEmploye() {
+        //given
+        Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
+        //when
+        Boolean result = a.equals(a);
+        //then
+        Assertions.assertThat(result).isTrue();
+    }
+
+    @Test
+    void equalsWithNonEqualsEmploye() {
+        //given
+        Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
+        Employe b = new Employe("Silverhand", "Johnny", "M00003", LocalDate.now(), 1000.0, 1, 1.0);
+        //when
+        Boolean result = a.equals(b);
+        //then
+        Assertions.assertThat(result).isFalse();
+    }
+
+
 }
