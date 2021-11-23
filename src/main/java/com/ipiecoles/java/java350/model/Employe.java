@@ -146,9 +146,9 @@ public class Employe {
     /**
      * @param nom the nom to set
      */
-    public Employe setNom(String nom) {
+    public String setNom(String nom) {
         this.nom = nom;
-        return this;
+        return this.nom;
     }
 
     /**
@@ -161,8 +161,9 @@ public class Employe {
     /**
      * @param prenom the prenom to set
      */
-    public void setPrenom(String prenom) {
+    public String setPrenom(String prenom) {
         this.prenom = prenom;
+        return this.prenom;
     }
 
     /**

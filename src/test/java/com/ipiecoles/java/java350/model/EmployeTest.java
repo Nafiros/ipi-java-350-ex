@@ -25,6 +25,78 @@ final class NullableConverter extends SimpleArgumentConverter {
 
 class EmployeTest {
 
+    @ParameterizedTest(name = "getPrenom: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'John', 'John'",
+            "'Philip', 'Philip'",
+            "null, null"
+    })
+    void getPrenom(@ConvertWith(NullableConverter.class) String prenom,
+                   @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe("Doe", prenom, "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.getPrenom();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "setPrenom: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'John', 'John'",
+            "'Philip', 'Philip'",
+            "null, null"
+    })
+    void setPrenom(@ConvertWith(NullableConverter.class) String prenom,
+                   @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.setPrenom(prenom);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "getNom: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'Doe', 'Doe'",
+            "'Philip', 'Philip'",
+            "null, null"
+    })
+    void getNom(@ConvertWith(NullableConverter.class) String nom,
+                   @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe(nom, "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.getNom();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "setNom: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'Doe', 'Doe'",
+            "'Philip', 'Philip'",
+            "null, null"
+    })
+    void setNom(@ConvertWith(NullableConverter.class) String nom,
+                @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.setNom(nom);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
     @ParameterizedTest(name = "getNombreAnneeAnciennete: LocalDate.now() + {0} années - Expect : {1}")
     @CsvSource({
             "0, 0",
