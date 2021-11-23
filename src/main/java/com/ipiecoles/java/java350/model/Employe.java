@@ -98,7 +98,7 @@ public class Employe {
      */
     //Matricule, performance, date d'embauche, temps partiel, prime
     public Double getPrimeAnnuelle(){
-        if (this.performance == null || this.tempsPartiel == null) {
+        if (this.tempsPartiel == null) {
             return null;
         }
         if (this.getNombreAnneeAnciennete() == null) {
