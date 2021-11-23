@@ -48,10 +48,10 @@ public class Employe {
      * @return
      */
     public Integer getNombreAnneeAnciennete() {
-        if (dateEmbauche == null)
-            return (0);
+        if (dateEmbauche == null || (LocalDate.now().getYear() - dateEmbauche.getYear() < 0))
+            return (null);
         else
-            return (LocalDate.now().getYear() - dateEmbauche.getYear() <= 0) ? 0 : LocalDate.now().getYear() - dateEmbauche.getYear();
+            return (LocalDate.now().getYear() - dateEmbauche.getYear() == 0) ? 0 : LocalDate.now().getYear() - dateEmbauche.getYear();
     }
 
     public Integer getNbConges() {
@@ -96,6 +96,12 @@ public class Employe {
      */
     //Matricule, performance, date d'embauche, temps partiel, prime
     public Double getPrimeAnnuelle(){
+        if (this.performance == null || this.tempsPartiel == null || this == null) {
+            return null;
+        }
+        if (this.getNombreAnneeAnciennete() == null) {
+            return (0.0);
+        }
         //Calcule de la prime d'ancienneté
         Double primeAnciennete = Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete();
         Double prime;

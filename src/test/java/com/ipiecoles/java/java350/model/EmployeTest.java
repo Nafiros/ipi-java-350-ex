@@ -29,9 +29,10 @@ class EmployeTest {
     @CsvSource({
             "0, 0",
             "-5, 5",
-            "5, 0"
+            "5, null"
     })
-    void getNombreAnneeAnciennete(Integer offset, Integer expected) {
+    void getNombreAnneeAnciennete(Integer offset,
+                                  @ConvertWith(NullableConverter.class) Integer expected) {
         // given
         Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now().plusYears(offset), 2500.0, 1, 1.0);
 
@@ -51,7 +52,7 @@ class EmployeTest {
         Integer nbAnnees = employe.getNombreAnneeAnciennete();
 
         // Then
-        Assertions.assertThat(nbAnnees).isNotNull().isNotNegative().isZero();
+        Assertions.assertThat(nbAnnees).isNull();
     }
 
     @ParameterizedTest(name = "getPrimeAnnuelle: Employee: [matricule: {0}, anciennete: {1}, performance: {2}, tempsTravail: {3}] - Expect : {4}")
@@ -60,10 +61,11 @@ class EmployeTest {
             "'M00001', 1, 1, 1.0, 1800.0",
             "'M00001', 0, 2, 1.0, 1700.0",
             "'M00001', 0, 1, 0.5, 850.0",
-            //"'M00001', null, 1, 0.5, null",
+
+            "'M00001', -1, 1, 1.0, 0.0",
             "'M00001', 0, null, 0.5, null",
-            //"'M00001', 0, 1, null, null",
-            "null, 0, 1, 1.0, null",
+            "'M00001', 0, 1, null, null",
+            "null, 0, 1, 1.0, 1000.0",
 
             "'E00002', 0, 1, 1.0, 1000.0",
             "'E00002', 1, 1, 1.0, 1100.0",
@@ -83,17 +85,5 @@ class EmployeTest {
 
         //Then
         Assertions.assertThat(prime).isEqualTo(expected);
-    }
-
-    @Test
-    void getPrimeAnnuelleWithEmployeIsNull() {
-        // given
-        Employe employe = null;
-
-        // When
-        Double prime = employe.getPrimeAnnuelle();
-
-        //Then
-        Assertions.assertThat(prime).isEqualTo(null);
     }
 }
