@@ -231,13 +231,14 @@ public class Employe {
         if (this == o) return true;
         if (!(o instanceof Employe)) return false;
         Employe employe = (Employe) o;
-        return Objects.equals(id, employe.id) &&
+        return  Objects.equals(id, employe.id) &&
                 Objects.equals(nom, employe.nom) &&
                 Objects.equals(prenom, employe.prenom) &&
                 Objects.equals(matricule, employe.matricule) &&
                 Objects.equals(dateEmbauche, employe.dateEmbauche) &&
                 Objects.equals(salaire, employe.salaire) &&
-                Objects.equals(performance, employe.performance);
+                Objects.equals(performance, employe.performance) &&
+                Objects.equals(tempsPartiel, employe.tempsPartiel);
     }
 
     @Override

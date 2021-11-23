@@ -236,11 +236,20 @@ class EmployeTest {
         Assertions.assertThat(result).isTrue();
     }
 
-    @Test
-    void equalsWithNonEqualsEmploye() {
+    @ParameterizedTest(name = "equalsWithNonEqualsEmploye: [{0}, {1}, {2}, {3}, {4}, {5}, {6}] - Expect : false")
+    @CsvSource({
+            "'Silverhand', 'John', 'M12345', 0, 1000.0, 1, 1.0",
+            "'Doe', 'Johnny', 'M12345', 0, 1000.0, 1, 1.0",
+            "'Doe', 'John', 'M00001', 0, 1000.0, 1, 1.0",
+            "'Doe', 'John', 'M12345', 1, 1000.0, 1, 1.0",
+            "'Doe', 'John', 'M12345', 0, 1500.0, 1, 1.0",
+            "'Doe', 'John', 'M12345', 0, 1000.0, 2, 1.0",
+            "'Doe', 'John', 'M12345', 0, 1000.0, 1, 0.5",
+    })
+    void equalsWithNonEqualsEmploye(String nom, String prenom, String matricule, Integer anciennete, Double salaire, Integer performance, Double tempsPartiel) {
         //given
-        Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
-        Employe b = new Employe("Silverhand", "Johnny", "M00003", LocalDate.now().minusYears(2), 1300.0, 2, 1.5);
+        Employe a = new Employe("Doe", "John", "M12345", LocalDate.now(), 1000.0, 1, 1.0);
+        Employe b = new Employe(nom, prenom, matricule, LocalDate.now().minusYears(anciennete), salaire, performance, tempsPartiel);
         //when
         Boolean result = a.equals(b);
         //then
