@@ -178,8 +178,9 @@ public class Employe {
     /**
      * @param matricule the matricule to set
      */
-    public void setMatricule(String matricule) {
+    public String setMatricule(String matricule) {
         this.matricule = matricule;
+        return this.matricule;
     }
 
     /**
@@ -192,8 +193,9 @@ public class Employe {
     /**
      * @param dateEmbauche the dateEmbauche to set
      */
-    public void setDateEmbauche(LocalDate dateEmbauche) {
+    public LocalDate setDateEmbauche(LocalDate dateEmbauche) {
         this.dateEmbauche = dateEmbauche;
+        return this.dateEmbauche;
     }
 
     /**
@@ -206,24 +208,27 @@ public class Employe {
     /**
      * @param salaire the salaire to set
      */
-    public void setSalaire(Double salaire) {
+    public Double setSalaire(Double salaire) {
         this.salaire = salaire;
+        return this.salaire;
     }
 
     public Integer getPerformance() {
         return performance;
     }
 
-    public void setPerformance(Integer performance) {
+    public Integer setPerformance(Integer performance) {
         this.performance = performance;
+        return this.performance;
     }
 
     public Double getTempsPartiel() {
         return tempsPartiel;
     }
 
-    public void setTempsPartiel(Double tempsPartiel) {
+    public Double setTempsPartiel(Double tempsPartiel) {
         this.tempsPartiel = tempsPartiel;
+        return this.tempsPartiel;
     }
 
     @Override

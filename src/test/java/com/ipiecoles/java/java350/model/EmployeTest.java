@@ -1,5 +1,6 @@
 package com.ipiecoles.java.java350.model;
 
+import net.bytebuddy.asm.Advice;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -130,6 +131,139 @@ class EmployeTest {
 
         //then
         Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "getMatricule: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'L12345', 'L12345'",
+            "'M00001', 'M00001'",
+            "null, null"
+    })
+    void getMatricule(@ConvertWith(NullableConverter.class) String given,
+                @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", given, LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.getMatricule();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "setMatricule: Given {0} - Expect : {1}")
+    @CsvSource({
+            "'M12345', 'M12345'",
+            "'L09876', 'L09876'",
+            "null, null"
+    })
+    void setMatricule(@ConvertWith(NullableConverter.class) String given,
+                @ConvertWith(NullableConverter.class) String expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        String result = employe.setNom(given);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+    @Test
+    void getDateEmbauche() {
+        // given
+        LocalDate time = LocalDate.now();
+        Employe employe = new Employe("Doe", "John", "M10000", time, 2500.0, 1, 1.0);
+
+        // when
+        LocalDate result = employe.getDateEmbauche();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(time);
+    }
+
+    @Test
+    void setDateEmbauche() {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+        LocalDate time = LocalDate.now();
+
+        // when
+        LocalDate result = employe.setDateEmbauche(time);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(time);
+    }
+
+    @Test
+    void getSalaire() {
+        // given
+        Employe employe = new Employe("Doe", "John", "M10000", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Double result = employe.getSalaire();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(2500.0);
+    }
+
+    @Test
+    void setSalaire() {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Double result = employe.setSalaire(1500.0);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(1500.0);
+    }
+
+    @Test
+    void getPerformance() {
+        // given
+        Employe employe = new Employe("Doe", "John", "M10000", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Integer result = employe.getPerformance();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(1);
+    }
+
+    @Test
+    void setPerformance() {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Integer result = employe.setPerformance(15);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(15);
+    }
+
+    @Test
+    void getTempsPartiel() {
+        // given
+        Employe employe = new Employe("Doe", "John", "M10000", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Double result = employe.getTempsPartiel();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(1.0);
+    }
+
+    @Test
+    void setTempsPartiel() {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Double result = employe.setTempsPartiel(0.5);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(0.5);
     }
 
     /*
