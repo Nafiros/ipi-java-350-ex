@@ -30,9 +30,6 @@ public class Employe {
 
     private Double tempsPartiel = 1.0;
 
-    public Employe() {
-    }
-
     public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer performance, Double tempsPartiel) {
         this.nom = nom;
         this.prenom = prenom;
@@ -132,8 +129,9 @@ public class Employe {
         return id;
     }
 
-    public void setId(Long id) {
+    public Long setId(Long id) {
         this.id = id;
+        return this.id;
     }
 
     /**

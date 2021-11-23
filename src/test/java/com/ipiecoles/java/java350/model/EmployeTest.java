@@ -25,6 +25,42 @@ final class NullableConverter extends SimpleArgumentConverter {
 
 class EmployeTest {
 
+    @ParameterizedTest(name = "getId: Expect : {1}")
+    @CsvSource({
+            "1, 1"
+    })
+    void getId(@ConvertWith(NullableConverter.class) Long id,
+               @ConvertWith(NullableConverter.class) Long expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+        employe.setId(id);
+
+        // when
+        Long result = employe.getId();
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest(name = "setId: Given {0} - Expect : {1}")
+    @CsvSource({
+            "2, 2",
+            "86382538323, 86382538323",
+            "-628323232, -628323232",
+            "null, null"
+    })
+    void setId(@ConvertWith(NullableConverter.class) Long id,
+               @ConvertWith(NullableConverter.class) Long expected) {
+        // given
+        Employe employe = new Employe("Doe", "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
+
+        // when
+        Long result = employe.setId(id);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
+
     @ParameterizedTest(name = "getPrenom: Given {0} - Expect : {1}")
     @CsvSource({
             "'John', 'John'",
@@ -68,7 +104,7 @@ class EmployeTest {
             "null, null"
     })
     void getNom(@ConvertWith(NullableConverter.class) String nom,
-                   @ConvertWith(NullableConverter.class) String expected) {
+                @ConvertWith(NullableConverter.class) String expected) {
         // given
         Employe employe = new Employe(nom, "John", "E31250", LocalDate.now(), 2500.0, 1, 1.0);
 
