@@ -3,11 +3,25 @@ package com.ipiecoles.java.java350.model;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ArgumentConversionException;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.converter.SimpleArgumentConverter;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.params.converter.DefaultArgumentConverter;
+
+final class NullableConverter extends SimpleArgumentConverter {
+    @Override
+    protected Object convert(Object source, Class<?> targetType) throws ArgumentConversionException {
+        if ("null".equals(source)) {
+            return null;
+        }
+        return DefaultArgumentConverter.INSTANCE.convert(source, targetType);
+    }
+}
 
 class EmployeTest {
 
@@ -46,12 +60,21 @@ class EmployeTest {
             "'M00001', 1, 1, 1.0, 1800.0",
             "'M00001', 0, 2, 1.0, 1700.0",
             "'M00001', 0, 1, 0.5, 850.0",
+            "'M00001', null, 1, 0.5, null",
+            "'M00001', 0, null, 0.5, null",
+            "'M00001', 0, 1, null, null",
+            "null, 0, 1, 1.0, null",
+
             "'E00002', 0, 1, 1.0, 1000.0",
             "'E00002', 1, 1, 1.0, 1100.0",
             "'E00002', 0, 2, 1.0, 2300.0",
             "'E00002', 0, 1, 0.5, 500.0",
     })
-    void getPrimeAnnuelle(String matricule, Integer anneeAnciennete, Integer performance, Double tempsDeTravail, Double expected) {
+    void getPrimeAnnuelle(@ConvertWith(NullableConverter.class) String matricule,
+                          @ConvertWith(NullableConverter.class) Integer anneeAnciennete,
+                          @ConvertWith(NullableConverter.class) Integer performance,
+                          @ConvertWith(NullableConverter.class) Double tempsDeTravail,
+                          @ConvertWith(NullableConverter.class) Double expected) {
         // given
         Employe employe = new Employe("Doe", "John", matricule, LocalDate.now().minusYears(anneeAnciennete), 2500.0, performance, tempsDeTravail);
 
@@ -62,4 +85,15 @@ class EmployeTest {
         Assertions.assertThat(prime).isEqualTo(expected);
     }
 
+    @Test
+    void getPrimeAnnuelleWithEmployeIsNull() {
+        // given
+        Employe employe = null;
+
+        // When
+        Double prime = employe.getPrimeAnnuelle();
+
+        //Then
+        Assertions.assertThat(prime).isEqualTo(null);
+    }
 }
