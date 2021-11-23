@@ -76,6 +76,8 @@ public class Employe {
                 break;
             case SATURDAY:i2 = i2 + 1;
                 break;
+            default:
+                break;
         }
         int monInt = (int) Entreprise.joursFeries(d).stream().filter(localDate ->
                 localDate.getDayOfWeek().getValue() <= DayOfWeek.FRIDAY.getValue()).count();
@@ -96,7 +98,7 @@ public class Employe {
      */
     //Matricule, performance, date d'embauche, temps partiel, prime
     public Double getPrimeAnnuelle(){
-        if (this.performance == null || this.tempsPartiel == null || this == null) {
+        if (this.performance == null || this.tempsPartiel == null) {
             return null;
         }
         if (this.getNombreAnneeAnciennete() == null) {
