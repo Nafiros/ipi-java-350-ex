@@ -127,7 +127,10 @@ public class Employe {
     //Augmenter salaire
     public double augmenterSalaire(double pourcentage)
     {
-        this.salaire = this.salaire + ((pourcentage * this.salaire) / 100);
+        if (this.salaire < 0) {
+            this.salaire = this.salaire + ((pourcentage * (this.salaire * -1)) / 100);
+        } else
+            this.salaire = this.salaire + ((pourcentage * this.salaire) / 100);
         return (this.salaire);
     }
 

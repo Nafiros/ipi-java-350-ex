@@ -403,22 +403,26 @@ class EmployeTest {
 
     // Tests de la méthode augmenterSalaire.
 
-    @ParameterizedTest(name = "augmenterSalaireWithValuedPercentage: Pourcentage d'augmentation: {0} - Resultat attendu : {1}")
+    @ParameterizedTest(name = "{index} => Salaire: {1} Pourcentage: {0} - expected: {2}")
     @CsvSource({
-            "8.0, 1080.0",
-            "-10.0, 900.0",
-            "0, 1000.0",
-            "1.5, 1015.0"
+            "8.0, 1000.0, 1080.0",
+            "-10.0, 1000.0, 900.0",
+            "0, 1000.0, 1000.0",
+            "1.5, 1000.0, 1015.0",
+
+            "1.0, 0, 0",
+            "10.0, -1000.0, -900.0",
+
     })
-    void augmenterSalaireWithValuedPercentage(Double pourcentage, Double expected)
+    void augmenterSalaire(Double pourcentage, Double salaire, Double expected)
     {
         //given
-        Employe a = new Employe("Doe", "John", "M12345", LocalDate.now(), 1000.0, 1, 1.0);
+        Employe a = new Employe("Doe", "John", "M12345", LocalDate.now(), salaire, 1, 1.0);
 
         //when
-        Double salaire = a.augmenterSalaire(pourcentage);
+        Double result = a.augmenterSalaire(pourcentage);
 
         //then
-        Assertions.assertThat(salaire).isEqualTo(expected);
+        Assertions.assertThat(result).isEqualTo(expected);
     }
 }
