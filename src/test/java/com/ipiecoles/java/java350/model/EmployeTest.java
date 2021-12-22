@@ -1,6 +1,5 @@
 package com.ipiecoles.java.java350.model;
 
-import net.bytebuddy.asm.Advice;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -394,7 +393,7 @@ class EmployeTest {
     void equalsWithDifferentObject() {
         //given
         Employe a = new Employe("Doe", "John", "M00001", LocalDate.now(), 1000.0, 1, 1.0);
-        String b = new String("lol");
+        String b = "lol";
         //when
         Boolean result = a.equals(b);
         //then
@@ -402,4 +401,28 @@ class EmployeTest {
     }
 
 
+    // Tests de la méthode augmenterSalaire.
+
+    @ParameterizedTest(name = "{index} => Salaire: {1} Pourcentage: {0} - expected: {2}")
+    @CsvSource({
+            "8.0, 1000.0, 1080.0",
+            "-10.0, 1000.0, 900.0",
+            "0, 1000.0, 1000.0",
+            "1.5, 1000.0, 1015.0",
+
+            "1.0, 0, 0",
+            "10.0, -1000.0, -900.0",
+
+    })
+    void augmenterSalaire(Double pourcentage, Double salaire, Double expected)
+    {
+        //given
+        Employe a = new Employe("Doe", "John", "M12345", LocalDate.now(), salaire, 1, 1.0);
+
+        //when
+        Double result = a.augmenterSalaire(pourcentage);
+
+        //then
+        Assertions.assertThat(result).isEqualTo(expected);
+    }
 }
