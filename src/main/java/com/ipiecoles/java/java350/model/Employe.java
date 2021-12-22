@@ -10,8 +10,6 @@ import java.util.Objects;
 
 @Entity
 public class Employe {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -127,7 +125,11 @@ public class Employe {
     }
 
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    public double augmenterSalaire(double pourcentage)
+    {
+        this.salaire = this.salaire + ((pourcentage * this.salaire) / 100);
+        return (this.salaire);
+    }
 
     public Long getId() {
         return id;
